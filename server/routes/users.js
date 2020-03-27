@@ -77,7 +77,7 @@ router.get("/logout", auth, (req, res) => {
   );
 });
 
-router.get("/addToCart", (req, res) => {
+router.get("/addToCart", auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, userInfo) => {
     let duplicate = false;
 
@@ -121,7 +121,7 @@ router.get("/addToCart", (req, res) => {
   });
 });
 
-router.get("/removeFromCart", (req, res) => {
+router.get("/removeFromCart", auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
     {
@@ -146,7 +146,7 @@ router.get("/removeFromCart", (req, res) => {
   );
 });
 
-router.get("/userCartInfo", (req, res) => {
+router.get("/userCartInfo", auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, userInfo) => {
     let cart = userInfo.cart;
     let array = cart.map(item => {
@@ -162,7 +162,7 @@ router.get("/userCartInfo", (req, res) => {
   });
 });
 
-router.post("/successBuy", (req, res) => {
+router.post("/successBuy", auth, (req, res) => {
   let history = [];
   let transactionData = {};
 
@@ -241,7 +241,7 @@ router.post("/successBuy", (req, res) => {
   );
 });
 
-router.get("/getHistory", (req, res) => {
+router.get("/getHistory", auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, doc) => {
     let history = doc.history;
     if (err) return res.status(400).send(err);
